@@ -1,5 +1,6 @@
 [functions]
   external_node_modules = ["express", "promi-client", "express-basic-auth"]
+  included_files = =["Login.html"]
 
 [[redirects]]
  from = "/*"
