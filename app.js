@@ -1,5 +1,6 @@
 const express = require('express');
 const client = require('prom-client');
+const basicAuth = require('express-basic-auth');
 
 // Erstelle eine Express-App
 const app = express();
@@ -61,6 +62,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/metrics', basicAuth({
+    users: { 'admin': 'admin123' }
+}));
+
 // Beispiel-Endpunkt
 app.get('/', (req, res) => {
   res.send('Hello, Prometheus!');
@@ -72,7 +77,6 @@ app.get('/metrics', async (req, res) => {
   res.send(await client.register.metrics());
 });
 
-// Server starten
-app.listen(port, () => {
-  console.log(`Server läuft auf http://localhost:${port}`);
-});
+// ... other routes following the same pattern
+
+module.exports = { app };
